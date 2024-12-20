@@ -8,6 +8,11 @@ package bankingsystem;
  *
  * @author enesi
  */
-public class CheckingAccount {
+public class CheckingAccount extends Account{
+
+    public CheckingAccount(String holder, String IBAN) {
+        super(holder, IBAN);
+    }
+    
     
 }
