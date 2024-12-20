@@ -9,10 +9,18 @@ package bankingsystem;
  * @author enesi
  */
 public class CheckingAccount extends Account{
-
+    String accountType = "Checking Account";
     public CheckingAccount(String holder, String IBAN) {
         super(holder, IBAN);
     }
+    public CheckingAccount(String holder) {
+        super(holder);
+    }
     
+    public String displayAccountInfo(){
+        return ("\nHolder: "+super.getHolder()
+                + "\nIBAN: "+super.getIBAN()
+                + "\nBalance: $"+super.getBalance());
+    }
     
 }
