@@ -1,0 +1,4 @@
+Account Type: Checking Account
+Holder: Shrimp Shrimpogullari
+IBAN: TR08 5552 8899 0478 7589 40
+Balance: $0.0

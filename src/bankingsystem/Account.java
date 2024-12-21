@@ -40,7 +40,7 @@ public abstract class Account {
     
     Account(){};
 
-    public Account(Customer holder) {// WORK IN PROGRESS  
+    public Account(Customer holder) {// WORK IN PROGRESS  //NEED TO CREATE A AccountInfo.txt file 
         this.holder = holder;
         balance = 0.00;
         this.IBAN = IBANGenerator.generate();
@@ -48,10 +48,11 @@ public abstract class Account {
         System.out.println("Account Created Succesfully!!"); // WILL BE A POP-UP WINDOW
     }
     
-    public void createAccount(){
+    private void createAccount(){
         String accountFileName = ("customers/"+holder.getTCID()+"/"+this.IBAN);
         File accountFile = new File(accountFileName);
         accountFile.mkdir();
+        //displayAccountInfo(); --> Will be written to a text file.
     }
 
     public String getHolderName() {

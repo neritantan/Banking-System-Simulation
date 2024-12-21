@@ -19,6 +19,6 @@ public class InsufficientFundsException extends Exception{
     
     @Override
     public String toString(){
-        return ("Insufficient Funds!!");
+        return ("Insufficient Funds!! You are trying to Withdraw $"+amount+" yet you have $"+balance+" in your account.");
     }
 }
