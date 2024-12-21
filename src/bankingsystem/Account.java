@@ -52,7 +52,7 @@ public abstract class Account {
         String accountFileName = ("customers/"+holder.getTCID()+"/"+this.IBAN);
         File accountFile = new File(accountFileName);
         accountFile.mkdir();
-        //displayAccountInfo(); --> Will be written to a text file.
+        //displayAccountInfo(); --> Will be written to a text file. I mean it's about to get written but GitHub doesn't recognize some changes :/
     }
 
     public String getHolderName() {

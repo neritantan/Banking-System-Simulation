@@ -27,7 +27,7 @@ public class Tester {
         try{
             accountFile.createNewFile();
         }
-        catch(Exception e){
+        catch(IOException e){
             System.out.println(e.getMessage());
         }
         
