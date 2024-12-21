@@ -4,6 +4,7 @@
  */
 package bankingsystem;
 import java.util.ArrayList;
+import java.io.File;
 /**
  *
  * @author enesi
@@ -19,10 +20,18 @@ public class Customer {
    public Customer(String firstName, String lastName, String TCID) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.TCID = TCID;
+        this.TCID = TCID;              //WILL going to check if it's 11 characters by TCID.len(); and if not will throw an exception.
         accounts = new ArrayList<>();
         fullName = (firstName+" "+lastName);
+        createCustomer();
+        System.out.println("Registered Succesfully!!");// WILL BE A POP-UP WINDOW if no exception
     }
+   
+   public void createCustomer(){
+       String customerFolderName = ("customers/"+this.TCID);
+       File customerFolder = new File(customerFolderName);
+       customerFolder.mkdir();
+   }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;

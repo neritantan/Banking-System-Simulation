@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package bankingsystem;
-
+import java.io.File;
 import java.util.Random;
 
 /**
@@ -11,7 +11,7 @@ import java.util.Random;
  * @author enesi
  */
 public abstract class Account {
-    private String holder;
+    private Customer holder;
     private double balance;
     private String IBAN;
     
@@ -29,28 +29,33 @@ public abstract class Account {
             int FOURdigitrand_3 = rand.nextInt(10000);
             int FOURdigitrand_4 = rand.nextInt(10000);
 
-            String IBAN =("TR"+TWOdigitrand_1+" "+FOURdigitrand_1+" "+FOURdigitrand_2+" "+FOURdigitrand_3+" "+FOURdigitrand_4+" "+TWOdigitrand_2);
+            String IBAN = String.format("TR%02d %04d %04d %04d %04d %02d", 
+                                    TWOdigitrand_1, FOURdigitrand_1, FOURdigitrand_2, 
+                                    FOURdigitrand_3, FOURdigitrand_4, TWOdigitrand_2);
 
         return IBAN;
     }
     }
+    
+    
     Account(){};
 
-    public Account(String holder,String IBAN) {
-        this.holder = holder;     
-        balance = 0.00;
-        this.IBAN = IBAN;
-        //successMessage(); // Your Checking Account/Draft Account got created <- ABSTRACT METHOD
-     }
-    
-    public Account(String holder) {// WORK IN PROGRESS
-        this.holder = holder;     
+    public Account(Customer holder) {// WORK IN PROGRESS  
+        this.holder = holder;
         balance = 0.00;
         this.IBAN = IBANGenerator.generate();
+        createAccount();
+        System.out.println("Account Created Succesfully!!"); // WILL BE A POP-UP WINDOW
+    }
+    
+    public void createAccount(){
+        String accountFileName = ("customers/"+holder.getTCID()+"/"+this.IBAN);
+        File accountFile = new File(accountFileName);
+        accountFile.mkdir();
     }
 
-    public String getHolder() {
-        return holder;
+    public String getHolderName() {
+        return holder.getFullName();
     }
 
     public String getIBAN() {
@@ -70,9 +75,15 @@ public abstract class Account {
         }
     }
     
-    public void deposit(double amount){
-        balance += amount;
-        System.out.println("$"+amount+" has been succesfully deposited to your account.");
+    public void deposit(double amount) throws InvalidDepositAmountException{
+        if(amount <= 0){
+        throw new InvalidDepositAmountException(amount);
+    }
+        else{
+            balance += amount;
+            System.out.println("$"+amount+" has been succesfully deposited to your account.");
+        }
+        
     }
     
     public abstract String displayAccountInfo();

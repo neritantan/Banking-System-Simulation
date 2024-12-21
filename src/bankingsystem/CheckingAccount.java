@@ -10,15 +10,13 @@ package bankingsystem;
  */
 public class CheckingAccount extends Account{
     String accountType = "Checking Account";
-    public CheckingAccount(String holder, String IBAN) {
-        super(holder, IBAN);
-    }
-    public CheckingAccount(String holder) {
+    public CheckingAccount(Customer holder) {
         super(holder);
     }
-    
+
     public String displayAccountInfo(){
-        return ("\nHolder: "+super.getHolder()
+        return  ("\nAccount Type: "+accountType
+                +"\nHolder: "+super.getHolderName()
                 + "\nIBAN: "+super.getIBAN()
                 + "\nBalance: $"+super.getBalance());
     }
