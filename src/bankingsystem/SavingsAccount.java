@@ -8,19 +8,21 @@ package bankingsystem;
  *
  * @author enesi
  */
-public class CheckingAccount extends Account{
-    String accountType = "Checking Account";
-    public CheckingAccount(Customer holder) {
+public class SavingsAccount extends Account{
+    String accountType = "Savings Account";
+    double interestRate;
+    double days = 0;
+    
+    SavingsAccount(Customer holder){
         super(holder);
     }
-
+    
     public String displayAccountInfo(){
         return  ("Account Type: "+accountType
                 +"\nHolder: "+super.getHolderName()
                 + "\nIBAN: "+super.getIBAN()
                 + "\nBalance: $"+super.getBalance());
     }
-    
     
     public String accountInfo(){// This part will be written into accountInfo.txt// WORK IN PROGRESS
         

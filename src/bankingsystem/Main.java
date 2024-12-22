@@ -10,7 +10,7 @@ import java.util.Scanner;
  * @author enesi
  */
 public class Main {
-    public static void main(String[] args){ //WORK IN PROGRESS
+    public static void main(String[] args){ //WORK IN PROGRESS //next thing to add is filling accountInfo.txt in constructor of Acconut
             Scanner scanner = new Scanner(System.in);
             String yesno;
             int choice;
@@ -23,7 +23,7 @@ public class Main {
             String lastName = scanner.nextLine();
             System.out.print("TCID: ");
             String TCID = scanner.nextLine();
-            Customer customer = new Customer(firstName,lastName,TCID);
+            Customer customer = new Customer(firstName,lastName,TCID);// Customer Creation
          
          do{
              

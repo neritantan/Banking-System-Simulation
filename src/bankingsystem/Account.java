@@ -14,7 +14,7 @@ public abstract class Account {
     private Customer holder;
     private double balance;
     private String IBAN;
-    
+    private String accountInfoPath;
     // Nested static class
     static class IBANGenerator {
     //String IBAN = "TRXX 0001 ZZZZ ZZZZ ZZZZ ZZZZ ZZ"; ///Example IBAN
@@ -44,6 +44,7 @@ public abstract class Account {
         this.holder = holder;
         balance = 0.00;
         this.IBAN = IBANGenerator.generate();
+        accountInfoPath = ("customers/"+holder.getTCID()+"/"+this.IBAN+"/accountInfo.txt");
         createAccount();
         System.out.println("Account Created Succesfully!!"); // WILL BE A POP-UP WINDOW
     }
@@ -53,6 +54,14 @@ public abstract class Account {
         File accountFile = new File(accountFileName);
         accountFile.mkdir();
         //displayAccountInfo(); --> Will be written to a text file. I mean it's about to get written but GitHub doesn't recognize some changes :/
+        File accountInfo = new File(accountFileName+"/accountInfo.txt");
+        try{
+             accountInfo.createNewFile();
+        }
+        catch(Exception e){
+            e.getMessage();
+       }
+        
     }
 
     public String getHolderName() {
@@ -66,6 +75,11 @@ public abstract class Account {
     public double getBalance() {
         return balance;
     }
+
+    public String getAccountInfoPath() {
+        return accountInfoPath;
+    }
+
     
     public void withdraw(double amount) throws InsufficientFundsException{
         if(amount > balance)
@@ -73,7 +87,9 @@ public abstract class Account {
         else{
             balance -= amount;
             System.out.println("$"+amount+" has been succesfully withdrawed from your account.");
+            //updateAccountInfo();
         }
+        
     }
     
     public void deposit(double amount) throws InvalidDepositAmountException{
@@ -83,9 +99,11 @@ public abstract class Account {
         else{
             balance += amount;
             System.out.println("$"+amount+" has been succesfully deposited to your account.");
+            //updateAccountInfo();
         }
         
     }
     
     public abstract String displayAccountInfo();
+    public abstract String accountInfo();
 }
