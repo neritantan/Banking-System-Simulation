@@ -64,9 +64,12 @@ public class Customer {
         accounts.add(checkingAccount);
     }
     //Polymorphism
-    //public void addAccount(OverdraftAccount overdraftAccount){
-    //    accounts.add(overdraftAccount);
-    //}
+//    public void addAccount(OverdraftAccount overdraftAccount){
+//        accounts.add(overdraftAccount);
+//    }
+//     public void addAccount(SavingsAccount savingsAccount){
+//        accounts.add(savingsAccount);
+//    }
     String customerInfo(){
         return "Name: "+firstName+"\nSurname: "+lastName+"\nTCID: "+TCID;
     }

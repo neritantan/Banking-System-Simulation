@@ -5,13 +5,18 @@
 package bankingsystem;
 import java.io.File;
 import java.util.Random;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.List;
 
 /**
  *
  * @author enesi
  */
 public abstract class Account {
-    private Customer holder;
+    public Customer holder;
     private double balance;
     private String IBAN;
     private String accountInfoPath;
@@ -45,24 +50,36 @@ public abstract class Account {
         balance = 0.00;
         this.IBAN = IBANGenerator.generate();
         accountInfoPath = ("customers/"+holder.getTCID()+"/"+this.IBAN+"/accountInfo.txt");
-        createAccount();
-        System.out.println("Account Created Succesfully!!"); // WILL BE A POP-UP WINDOW
     }
     
-    private void createAccount(){
-        String accountFileName = ("customers/"+holder.getTCID()+"/"+this.IBAN);
-        File accountFile = new File(accountFileName);
-        accountFile.mkdir();
-        //displayAccountInfo(); --> Will be written to a text file. I mean it's about to get written but GitHub doesn't recognize some changes :/
-        File accountInfo = new File(accountFileName+"/accountInfo.txt");
-        try{
-             accountInfo.createNewFile();
-        }
-        catch(Exception e){
-            e.getMessage();
-       }
-        
-    }
+//    private void createAccount(){
+//        String accountFileName = ("customers/"+holder.getTCID()+"/"+this.IBAN);
+//        File accountFile = new File(accountFileName);
+//        accountFile.mkdir();
+//        //accountInfo(); --> Will be written to a text file.
+//        File accountInfo = new File(accountFileName+"/accountInfo.txt");
+//        try{
+//             accountInfo.createNewFile();
+//        }
+//        catch(Exception e){
+//            e.getMessage();
+//       }
+//       /// -> after file creation
+//       try {
+//        FileWriter fileWriter = new FileWriter(accountInfo); 
+//        BufferedWriter writer = new BufferedWriter(fileWriter);
+//
+//
+//        writer.write(accountInfo());
+//
+//        writer.close();
+//        fileWriter.close();
+//            
+//    }
+//       catch (IOException e) {
+//        e.getMessage();
+//    }  
+//    }
 
     public String getHolderName() {
         return holder.getFullName();
@@ -87,7 +104,7 @@ public abstract class Account {
         else{
             balance -= amount;
             System.out.println("$"+amount+" has been succesfully withdrawed from your account.");
-            //updateAccountInfo();
+            updateAccountInfo();
         }
         
     }
@@ -99,10 +116,22 @@ public abstract class Account {
         else{
             balance += amount;
             System.out.println("$"+amount+" has been succesfully deposited to your account.");
-            //updateAccountInfo();
+            updateAccountInfo();
         }
         
     }
+    
+    private void updateAccountInfo() {
+    try {
+        File accountFile = new File(accountInfoPath);
+        List<String> lines = Files.readAllLines(accountFile.toPath());
+        lines.set(3, String.valueOf(this.balance)); 
+        Files.write(accountFile.toPath(), lines);
+    } 
+    catch (IOException e) {
+        e.getMessage();
+    }
+}
     
     public abstract String displayAccountInfo();
     public abstract String accountInfo();

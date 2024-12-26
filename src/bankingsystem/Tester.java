@@ -39,73 +39,87 @@ public class Tester {
     }
 
     private void showRegistrationScreen() {
-        panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBackground(new Color(40, 40, 40));  // Dark background for panel
+    panel = new JPanel();
+    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+    panel.setBackground(new Color(255, 255, 255));  // Beyaz arka plan rengi
 
-        JLabel titleLabel = new JLabel("Welcome to the Banking System", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        titleLabel.setForeground(Color.WHITE);  // White text for contrast
-        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        titleLabel.setPreferredSize(new Dimension(400, 40));
+    // Başlık etiketini daha çekici hale getirme
+    JLabel titleLabel = new JLabel("Welcome to the Banking System", SwingConstants.CENTER);
+    titleLabel.setFont(new Font("Verdana", Font.BOLD, 28));  // Modern font ve büyük başlık
+    titleLabel.setForeground(new Color(30, 30, 30));  // Koyu gri renk
+    titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+    titleLabel.setPreferredSize(new Dimension(400, 60));
+    titleLabel.setBorder(BorderFactory.createEmptyBorder(30, 0, 20, 0));  // Başlık etrafına boşluk
 
-        // Create input fields with custom style
-        JPanel inputPanel = new JPanel(new GridLayout(3, 2, 10, 10));
-        inputPanel.setOpaque(false);
+    // Giriş alanları için panel
+    JPanel inputPanel = new JPanel(new GridLayout(3, 2, 20, 20));
+    inputPanel.setOpaque(false);
 
-        JLabel firstNameLabel = new JLabel("First Name:");
-        firstNameLabel.setForeground(Color.WHITE);  // White text for contrast
-        JTextField firstNameField = new JTextField();
-        firstNameField.setBorder(BorderFactory.createLineBorder(new Color(150, 150, 150), 1));
-        firstNameField.setBackground(new Color(60, 60, 60)); // Dark background for input fields
-        firstNameField.setForeground(Color.WHITE);  // White text
+    // First name label ve text field
+    JLabel firstNameLabel = new JLabel("First Name:");
+    firstNameLabel.setFont(new Font("Arial", Font.PLAIN, 18));  // Yazı tipi
+    firstNameLabel.setForeground(new Color(60, 60, 60));  // Koyu gri renk
+    JTextField firstNameField = new JTextField();
+    firstNameField.setFont(new Font("Arial", Font.PLAIN, 16));
+    firstNameField.setBorder(BorderFactory.createLineBorder(new Color(180, 180, 180), 1));
+    firstNameField.setBackground(new Color(245, 245, 245));  // Açık gri arka plan
+    firstNameField.setForeground(Color.BLACK);
 
-        JLabel lastNameLabel = new JLabel("Last Name:");
-        lastNameLabel.setForeground(Color.WHITE);  // White text for contrast
-        JTextField lastNameField = new JTextField();
-        lastNameField.setBorder(BorderFactory.createLineBorder(new Color(150, 150, 150), 1));
-        lastNameField.setBackground(new Color(60, 60, 60)); // Dark background for input fields
-        lastNameField.setForeground(Color.WHITE);  // White text
+    // Last name label ve text field
+    JLabel lastNameLabel = new JLabel("Last Name:");
+    lastNameLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+    lastNameLabel.setForeground(new Color(60, 60, 60));
+    JTextField lastNameField = new JTextField();
+    lastNameField.setFont(new Font("Arial", Font.PLAIN, 16));
+    lastNameField.setBorder(BorderFactory.createLineBorder(new Color(180, 180, 180), 1));
+    lastNameField.setBackground(new Color(245, 245, 245));
+    lastNameField.setForeground(Color.BLACK);
 
-        JLabel tcidLabel = new JLabel("TCID:");
-        tcidLabel.setForeground(Color.WHITE);  // White text for contrast
-        JTextField tcidField = new JTextField();
-        tcidField.setBorder(BorderFactory.createLineBorder(new Color(150, 150, 150), 1));
-        tcidField.setBackground(new Color(60, 60, 60)); // Dark background for input fields
-        tcidField.setForeground(Color.WHITE);  // White text
+    // TCID label ve text field
+    JLabel tcidLabel = new JLabel("TCID:");
+    tcidLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+    tcidLabel.setForeground(new Color(60, 60, 60));
+    JTextField tcidField = new JTextField();
+    tcidField.setFont(new Font("Arial", Font.PLAIN, 16));
+    tcidField.setBorder(BorderFactory.createLineBorder(new Color(180, 180, 180), 1));
+    tcidField.setBackground(new Color(245, 245, 245));
+    tcidField.setForeground(Color.BLACK);
 
-        inputPanel.add(firstNameLabel);
-        inputPanel.add(firstNameField);
-        inputPanel.add(lastNameLabel);
-        inputPanel.add(lastNameField);
-        inputPanel.add(tcidLabel);
-        inputPanel.add(tcidField);
+    // Panel'e input alanlarını ekleyelim
+    inputPanel.add(firstNameLabel);
+    inputPanel.add(firstNameField);
+    inputPanel.add(lastNameLabel);
+    inputPanel.add(lastNameField);
+    inputPanel.add(tcidLabel);
+    inputPanel.add(tcidField);
 
-        // Register button with modern style
-        JButton registerButton = new JButton("Register");
-        registerButton.setFont(new Font("Arial", Font.BOLD, 16));
-        registerButton.setBackground(new Color(53, 160, 204)); // Blue color for button
-        registerButton.setForeground(Color.WHITE);
-        registerButton.setFocusPainted(false);
-        registerButton.setPreferredSize(new Dimension(150, 40));
-        registerButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        registerButton.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        registerButton.addActionListener(e -> {
-            String firstName = firstNameField.getText();
-            String lastName = lastNameField.getText();
-            String tcid = tcidField.getText();
-            customer = new Customer(firstName, lastName, tcid);
-            showAccountCreationScreen();
-        });
+    // Kayıt butonunu daha şık yapma
+    JButton registerButton = new JButton("Register");
+    registerButton.setFont(new Font("Arial", Font.BOLD, 18));
+    registerButton.setBackground(new Color(53, 160, 204)); // Mavi renk
+    registerButton.setForeground(Color.WHITE);
+    registerButton.setFocusPainted(false);
+    registerButton.setPreferredSize(new Dimension(200, 50));
+    registerButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+    registerButton.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
+    registerButton.addActionListener(e -> {
+        String firstName = firstNameField.getText();
+        String lastName = lastNameField.getText();
+        String tcid = tcidField.getText();
+        customer = new Customer(firstName, lastName, tcid);
+        showAccountCreationScreen();
+    });
 
-        panel.add(titleLabel);
-        panel.add(inputPanel);
-        panel.add(registerButton);
+    // Panel'e bileşenleri ekleyelim
+    panel.add(titleLabel);
+    panel.add(inputPanel);
+    panel.add(registerButton);
 
-        frame.setContentPane(panel);
-        frame.revalidate();
-        frame.repaint();
-    }
+    // Ekranda görsellik için paneli güncelleme
+    frame.setContentPane(panel);
+    frame.revalidate();
+    frame.repaint();
+}
 
     private void showAccountCreationScreen() {
         panel = new JPanel();
@@ -171,54 +185,62 @@ public class Tester {
     }
 
     private void showAccountActionsScreen(Account account) {
-        panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBackground(new Color(40, 40, 40));  // Dark background for panel
+    panel = new JPanel();
+    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+    panel.setBackground(new Color(40, 40, 40));  // Dark background for panel
 
-        JLabel infoLabel = new JLabel("Account Info: " + account.displayAccountInfo(), SwingConstants.CENTER);
-        infoLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        infoLabel.setForeground(Color.WHITE);  // White text for contrast
-        infoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+    // JTextArea kullanarak uzun bilgiyi çok satırlı şekilde göstermek
+    JTextArea infoArea = new JTextArea(account.displayAccountInfo());
+    infoArea.setFont(new Font("Arial", Font.PLAIN, 14));
+    infoArea.setForeground(Color.WHITE);  // White text for contrast
+    infoArea.setBackground(new Color(60, 60, 60)); // Dark background for text area
+    infoArea.setEditable(false); // Kullanıcı düzenlemeyi engelle
+    infoArea.setLineWrap(true);  // Satırları kırmak için
+    infoArea.setWrapStyleWord(true);  // Kelime kesilmesini engellemek için
+    infoArea.setCaretPosition(0); // Başlangıçta en üst satıra gelmesi için
 
-        JButton withdrawButton = new JButton("Withdraw");
-        customizeButton(withdrawButton);
-        withdrawButton.addActionListener(e -> {
-            String amountStr = JOptionPane.showInputDialog(frame, "Enter amount to withdraw:");
-            try {
-                double amount = Double.parseDouble(amountStr);
-                account.withdraw(amount);
-                JOptionPane.showMessageDialog(frame, "Withdraw successful! New balance: " + account.getBalance());
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(frame, "Error: " + ex.getMessage());
-            }
-        });
+    JScrollPane scrollPane = new JScrollPane(infoArea);
+    scrollPane.setPreferredSize(new Dimension(400, 200)); // Scrollable area for account info
+    panel.add(scrollPane);
 
-        JButton depositButton = new JButton("Deposit");
-        customizeButton(depositButton);
-        depositButton.addActionListener(e -> {
-            String amountStr = JOptionPane.showInputDialog(frame, "Enter amount to deposit:");
-            try {
-                double amount = Double.parseDouble(amountStr);
-                account.deposit(amount);
-                JOptionPane.showMessageDialog(frame, "Deposit successful! New balance: " + account.getBalance());
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(frame, "Error: " + ex.getMessage());
-            }
-        });
+    JButton withdrawButton = new JButton("Withdraw");
+    customizeButton(withdrawButton);
+    withdrawButton.addActionListener(e -> {
+        String amountStr = JOptionPane.showInputDialog(frame, "Enter amount to withdraw:");
+        try {
+            double amount = Double.parseDouble(amountStr);
+            account.withdraw(amount);
+            JOptionPane.showMessageDialog(frame, "Withdraw successful! New balance: " + account.getBalance());
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(frame, "Error: " + ex.getMessage());
+        }
+    });
 
-        JButton backButton = new JButton("Back");
-        customizeButton(backButton);
-        backButton.addActionListener(e -> showAccountSelectionScreen());
+    JButton depositButton = new JButton("Deposit");
+    customizeButton(depositButton);
+    depositButton.addActionListener(e -> {
+        String amountStr = JOptionPane.showInputDialog(frame, "Enter amount to deposit:");
+        try {
+            double amount = Double.parseDouble(amountStr);
+            account.deposit(amount);
+            JOptionPane.showMessageDialog(frame, "Deposit successful! New balance: " + account.getBalance());
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(frame, "Error: " + ex.getMessage());
+        }
+    });
 
-        panel.add(infoLabel);
-        panel.add(withdrawButton);
-        panel.add(depositButton);
-        panel.add(backButton);
+    JButton backButton = new JButton("Back");
+    customizeButton(backButton);
+    backButton.addActionListener(e -> showAccountSelectionScreen());
 
-        frame.setContentPane(panel);
-        frame.revalidate();
-        frame.repaint();
-    }
+    panel.add(withdrawButton);
+    panel.add(depositButton);
+    panel.add(backButton);
+
+    frame.setContentPane(panel);
+    frame.revalidate();
+    frame.repaint();
+}
 
     // Method to customize buttons with dark theme
     private void customizeButton(JButton button) {
