@@ -138,6 +138,9 @@
             <Property name="horizontalAlignment" type="int" value="2"/>
             <Property name="alignmentX" type="float" value="0.0"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jlastNameActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
@@ -159,6 +162,9 @@
             <Property name="horizontalAlignment" type="int" value="2"/>
             <Property name="alignmentX" type="float" value="0.0"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTCIDActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
@@ -180,6 +186,9 @@
             <Property name="horizontalAlignment" type="int" value="2"/>
             <Property name="alignmentX" type="float" value="0.0"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jPasswordActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JPasswordField" name="jPasswordConfirm">
           <Properties>
@@ -189,6 +198,9 @@
             <Property name="horizontalAlignment" type="int" value="2"/>
             <Property name="alignmentX" type="float" value="0.0"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jPasswordConfirmActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
@@ -218,6 +230,9 @@
               <Dimension value="[75, 25]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRegisterButton_RActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jLoginButton_R">
           <Properties>

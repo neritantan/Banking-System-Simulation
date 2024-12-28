@@ -4,15 +4,21 @@
  */
 package bankingsystem;
 
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author enesi
  */
 public class GUI_Register extends javax.swing.JPanel {
 
-    /**
-     * Creates new form GUI_Register
-     */
+    private String firstName;
+    private String lastName;
+    private String TCID;
+    private String password1;
+    private String password2;
+    
     public GUI_Register() {
         initComponents();
     }
@@ -66,6 +72,11 @@ public class GUI_Register extends javax.swing.JPanel {
         jlastName.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jlastName.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         jlastName.setAlignmentX(0.0F);
+        jlastName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jlastNameActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(253, 253, 253));
@@ -75,6 +86,11 @@ public class GUI_Register extends javax.swing.JPanel {
         jTCID.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jTCID.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         jTCID.setAlignmentX(0.0F);
+        jTCID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTCIDActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(253, 253, 253));
@@ -84,10 +100,20 @@ public class GUI_Register extends javax.swing.JPanel {
         jPassword.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jPassword.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         jPassword.setAlignmentX(0.0F);
+        jPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPasswordActionPerformed(evt);
+            }
+        });
 
         jPasswordConfirm.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jPasswordConfirm.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         jPasswordConfirm.setAlignmentX(0.0F);
+        jPasswordConfirm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPasswordConfirmActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(253, 253, 253));
@@ -99,6 +125,11 @@ public class GUI_Register extends javax.swing.JPanel {
         jRegisterButton_R.setForeground(new java.awt.Color(253, 253, 253));
         jRegisterButton_R.setText("Register");
         jRegisterButton_R.setPreferredSize(new java.awt.Dimension(75, 25));
+        jRegisterButton_R.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRegisterButton_RActionPerformed(evt);
+            }
+        });
 
         jLoginButton_R.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLoginButton_R.setForeground(new java.awt.Color(253, 253, 253));
@@ -169,8 +200,45 @@ public class GUI_Register extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jfirstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jfirstNameActionPerformed
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_jfirstNameActionPerformed
+
+    private void jlastNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jlastNameActionPerformed
+     
+    }//GEN-LAST:event_jlastNameActionPerformed
+
+    private void jTCIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTCIDActionPerformed
+        
+    }//GEN-LAST:event_jTCIDActionPerformed
+
+    private void jPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordActionPerformed
+       
+    }//GEN-LAST:event_jPasswordActionPerformed
+
+    private void jPasswordConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordConfirmActionPerformed
+       
+        if(password1 != password2){
+            //Probably need to throw an exception here which triggers something idk...
+        }
+    }//GEN-LAST:event_jPasswordConfirmActionPerformed
+
+    private void jRegisterButton_RActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRegisterButton_RActionPerformed
+        firstName = jfirstName.getText();
+        lastName = jlastName.getText();
+        TCID = jTCID.getText();
+        password1 = new String(jPassword.getPassword());
+        password2 = new String(jPasswordConfirm.getPassword());
+        
+        if(!password1.equals(password2)){
+            //Probably need to throw an exception here which triggers something idk...
+            JOptionPane.showMessageDialog(null, "Passwords do not match!", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else{
+            Customer customer = new Customer(firstName, lastName, TCID);// This also needs to take pass info
+            JOptionPane.showMessageDialog(null, "Registered Succesfully. ");
+        }
+        
+    }//GEN-LAST:event_jRegisterButton_RActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
