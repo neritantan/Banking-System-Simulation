@@ -27,6 +27,8 @@ public class Customer {
         System.out.println("Registered Succesfully!!");// WILL BE A POP-UP WINDOW if no exception
     }
    
+   
+   
    public void createCustomer(){
        String customerFolderName = ("customers/"+this.TCID);
        File customerFolder = new File(customerFolderName);

@@ -10,6 +10,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -42,6 +44,60 @@ public abstract class Account {
     }
     }
     
+    private class Transaction{
+        private String type;
+        private double amount;
+        private double newBalance;
+        private Date date;
+        public String transactionLogsFilePath = ("customers/"+holder.getTCID()+"/"+IBAN+"/transactions.log");
+        
+        public Transaction(String type, double amount, double newBalance) {
+            this.type = type;
+            this.amount = amount;
+            this.newBalance = newBalance;
+            this.date = new Date();
+        }
+        
+       public String getFormattedTransactionRecord() { // --> Converts given transactions to Strings
+            String sign = type.equals("Deposit") ? "+" : "-";
+            return String.format("%1$td.%1$tm.%1$tY - %1$tT | %2$s$%3$.2f | %4$s | New Balance : $%5$.2f", 
+                         date, sign, Math.abs(amount), type, newBalance);
+        }
+
+
+        
+        public void saveTransactionToFile(){ // --> Saves transactions to file as Strings
+            try{
+                File transactionLogFile = new File(transactionLogsFilePath);
+                if(!transactionLogFile.exists())
+                    transactionLogFile.createNewFile();
+                
+                FileWriter fileWriter = new FileWriter(transactionLogFile , true);
+                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);// --> For faster writing
+                
+                bufferedWriter.write(this.getFormattedTransactionRecord());// --> Write transaction string to file.
+                bufferedWriter.newLine();
+                
+                bufferedWriter.close();
+                fileWriter.close();  
+            }
+            catch(IOException e){
+                e.getMessage();
+                System.out.println("Something went wrong while saving Transaction Log.");
+            }
+        }
+        
+        //public String getTransactionFromFile();
+        
+        
+        
+        
+        
+        
+        
+        
+    }
+    
     
     Account(){};
 
@@ -51,35 +107,6 @@ public abstract class Account {
         this.IBAN = IBANGenerator.generate();
         accountInfoPath = ("customers/"+holder.getTCID()+"/"+this.IBAN+"/accountInfo.txt");
     }
-    
-//    private void createAccount(){
-//        String accountFileName = ("customers/"+holder.getTCID()+"/"+this.IBAN);
-//        File accountFile = new File(accountFileName);
-//        accountFile.mkdir();
-//        //accountInfo(); --> Will be written to a text file.
-//        File accountInfo = new File(accountFileName+"/accountInfo.txt");
-//        try{
-//             accountInfo.createNewFile();
-//        }
-//        catch(Exception e){
-//            e.getMessage();
-//       }
-//       /// -> after file creation
-//       try {
-//        FileWriter fileWriter = new FileWriter(accountInfo); 
-//        BufferedWriter writer = new BufferedWriter(fileWriter);
-//
-//
-//        writer.write(accountInfo());
-//
-//        writer.close();
-//        fileWriter.close();
-//            
-//    }
-//       catch (IOException e) {
-//        e.getMessage();
-//    }  
-//    }
 
     public String getHolderName() {
         return holder.getFullName();
@@ -105,6 +132,8 @@ public abstract class Account {
             balance -= amount;
             System.out.println("$"+amount+" has been succesfully withdrawed from your account.");
             updateAccountInfo();
+            Transaction transaction = new Transaction("Withdraw",amount,this.balance);
+            transaction.saveTransactionToFile();
         }
         
     }
@@ -117,6 +146,8 @@ public abstract class Account {
             balance += amount;
             System.out.println("$"+amount+" has been succesfully deposited to your account.");
             updateAccountInfo();
+            Transaction transaction = new Transaction("Deposit",amount,this.balance);
+            transaction.saveTransactionToFile();
         }
         
     }
