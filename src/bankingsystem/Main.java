@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args){ //WORK IN PROGRESS //next thing to add is filling accountInfo.txt in constructor of Acconut
             Scanner scanner = new Scanner(System.in);
-            String yesno;
+            String yesno ="n";
             int choice;
             int accountSelection;
             //int choicewhichdeterminatesifitsaloginorregistrationprocess;
@@ -23,6 +23,69 @@ public class Main {
             choice = scanner.nextInt();
             scanner.nextLine();
             if(choice==1){// LOGIN
+                System.out.println("Welcome back! Please fill out your information to log in.");
+                System.out.print("TCID: ");
+                String TCID = scanner.nextLine();
+                System.out.print("Password: ");
+                String password = scanner.nextLine();
+                Login login = new Login(TCID, password);
+                Customer customer;
+                customer = login.getLoggedCustomer();
+                
+                do {
+            System.out.println("\nPlease select an account to perform actions:");
+            for (int i = 0; i < customer.accounts.size(); i++) {
+                System.out.println((i + 1) + "- " + customer.accounts.get(i).accountType + " | " + customer.accounts.get(i).getIBAN());
+            }
+            System.out.print("Your choice: ");
+            accountSelection = scanner.nextInt() - 1;
+            scanner.nextLine(); 
+
+            if (accountSelection < 0 || accountSelection >= customer.accounts.size()) {
+                System.out.println("Invalid account selection, please try again.");
+                continue;
+            }
+
+            Account selectedAccount = customer.accounts.get(accountSelection);
+            System.out.println("Selected Account Info:");
+            System.out.println(selectedAccount.displayAccountInfo());
+
+            System.out.println("\nWhat do you want to do?");
+            System.out.println("1- Withdraw");
+            System.out.println("2- Deposit");
+            System.out.print("Your choice: ");
+            choice = scanner.nextInt();
+            scanner.nextLine(); 
+
+            System.out.print("Please enter the amount: ");
+            double amount = scanner.nextDouble();
+            scanner.nextLine(); 
+
+            try {
+                switch (choice) {
+                    case 1:
+                        selectedAccount.withdraw(amount);
+                        System.out.println("New balance: " + selectedAccount.getBalance());
+                        break;
+                    case 2:
+                        selectedAccount.deposit(amount);
+                        System.out.println("New balance: " + selectedAccount.getBalance());
+                        break;
+                    default:
+                        System.out.println("Invalid option, please select a valid action.");
+                        break;
+                }
+            } catch (InsufficientFundsException | InvalidDepositAmountException e) {
+                System.out.println(e.toString());
+            }
+
+            System.out.print("Do you want to perform another action? (y/n): ");
+            yesno = scanner.nextLine();
+        } while (!yesno.equals("n"));
+         customer.createCustomerInfoFile();
+        System.out.println("Goodbye Then!!");
+                
+                
                 
                 
             }
@@ -34,7 +97,9 @@ public class Main {
             String lastName = scanner.nextLine();
             System.out.print("TCID: ");
             String TCID = scanner.nextLine();
-            Customer customer = new Customer(firstName,lastName,TCID);// Customer Creation
+            System.out.print("Password: ");
+            String password = scanner.nextLine();
+            Customer customer = new Customer(firstName,lastName,TCID,password);// Customer Creation
          
          do{
              

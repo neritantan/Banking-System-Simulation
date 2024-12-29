@@ -47,7 +47,8 @@ public class Customer {
    public void createCustomer(){
        String customerFolderName = ("customers/"+this.TCID);
        File customerFolder = new File(customerFolderName);
-       customerFolder.mkdir();
+       if(!customerFolder.exists())
+          customerFolder.mkdir();
    }
 
     public void setFirstName(String firstName) {
@@ -94,7 +95,7 @@ public class Customer {
 //        accounts.add(savingsAccount);
 //    }
     
-    public void createCustomerInfoFile(){
+    public void createCustomerInfoFile(){// SHOULD BE CALLED AT THE END OF THE PROGRAM!!!!
         File customerinfoFile = new File("customers/"+getTCID()+"/customerInfo.txt");
         try{
             FileWriter fileWriter = new FileWriter(customerinfoFile);

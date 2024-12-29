@@ -108,6 +108,15 @@ public abstract class Account {
         accountInfoPath = ("customers/"+holder.getTCID()+"/"+this.IBAN+"/accountInfo.txt");
     }
 
+    public Account(Customer holder, double balance, String IBAN, String accountInfoPath) {
+        this.holder = holder;
+        this.balance = balance;
+        this.IBAN = IBAN;
+        this.accountInfoPath = accountInfoPath;
+    }
+    
+    
+
     public String getHolderName() {
         return holder.getFullName();
     }

@@ -22,11 +22,17 @@ public class CheckingAccount extends Account{
         System.out.println("Account Created Succesfully!!"); // WILL BE A POP-UP WINDOW
     }
     
+    public CheckingAccount(Customer holder, double balance, String IBAN, String accountInfoPath, String accounType){
+        super(holder,balance,IBAN,accountInfoPath);
+        this.accountType = accountType;
+    }
+    
     private void createAccount(){//customers/"+holder.getTCID()+"/"+this.IBAN
         String accountFileName = ("customers/"+super.holder.getTCID()+"/"+super.getIBAN());
         File accountFile = new File(accountFileName);
-        accountFile.mkdir();
-        //accountInfo(); --> Will be written to a text file.
+        if(!accountFile.exists())
+            accountFile.mkdir();
+            //accountInfo(); --> Will be written to a text file.
         File accountInfo = new File(accountFileName+"/accountInfo.txt");
         try{
              accountInfo.createNewFile();
@@ -45,10 +51,12 @@ public class CheckingAccount extends Account{
         writer.close();
         fileWriter.close();
             
-    }
+        }
        catch (IOException e) {
         e.getMessage();
-    }  
+        }  
+        
+        
     }
     
     public String displayAccountInfo(){
