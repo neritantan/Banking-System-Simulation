@@ -23,13 +23,29 @@ public class Main {
             choice = scanner.nextInt();
             scanner.nextLine();
             if(choice==1){// LOGIN
+                Customer customer = null;
+                Login login = null;
+                boolean error;
                 System.out.println("Welcome back! Please fill out your information to log in.");
+                
+                do{
+                error = false;
+                    try{
                 System.out.print("TCID: ");
                 String TCID = scanner.nextLine();
                 System.out.print("Password: ");
                 String password = scanner.nextLine();
-                Login login = new Login(TCID, password);
-                Customer customer;
+                login = new Login(TCID, password);
+                }catch(CustomerNotFoundException e){
+                    System.out.println(e.toString());
+                    error = true;
+                }
+                catch(PasswordNotCorrectException e){
+                    System.out.println(e.toString());
+                    error = true;
+                }
+                }while(error);
+
                 customer = login.getLoggedCustomer();
                 
                 do {

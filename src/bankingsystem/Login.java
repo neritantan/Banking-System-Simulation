@@ -21,14 +21,15 @@ public class Login {
     private Customer loggedCustomer;
     private String IBANs[]; 
     
-    public Login(String TCID, String Password) {
+    public Login(String TCID, String Password) throws CustomerNotFoundException, PasswordNotCorrectException{
         this.TCID = TCID;
         this.Password = Password;
         try {
              AccountLogin();
         }
        catch(Exception e){
-           e.toString();
+           //System.out.println(e.toString());
+           throw e;
        }
     }
     
