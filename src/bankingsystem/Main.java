@@ -15,7 +15,18 @@ public class Main {
             String yesno;
             int choice;
             int accountSelection;
-        
+            //int choicewhichdeterminatesifitsaloginorregistrationprocess;
+            
+            System.out.println("Welcome please select:");
+            System.out.println("1- Login");
+            System.out.println("2- Register");
+            choice = scanner.nextInt();
+            scanner.nextLine();
+            if(choice==1){// LOGIN
+                
+                
+            }
+            else{
             System.out.println("Welcome, In order to register please fill out the following boxes.");
             System.out.print("First Name: ");
             String firstName = scanner.nextLine();
@@ -97,7 +108,8 @@ public class Main {
             System.out.print("Do you want to perform another action? (y/n): ");
             yesno = scanner.nextLine();
         } while (!yesno.equals("n"));
-
+         customer.createCustomerInfoFile();
         System.out.println("Goodbye Then!!");
-    }    
+    } 
+    }
 }

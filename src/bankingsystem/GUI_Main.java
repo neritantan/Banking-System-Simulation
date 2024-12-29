@@ -16,6 +16,7 @@ public class GUI_Main extends javax.swing.JFrame {
 
     private GUI_Login login;
     private GUI_Register register;
+    private GUI_StartPage startpage;
     
     
     public void setLogin(){
@@ -37,11 +38,17 @@ public class GUI_Main extends javax.swing.JFrame {
         SwingUtilities.updateComponentTreeUI(jPanel_right);
     }
     
+    public void setStartPage(){
+        startpage = new GUI_StartPage();
+         jPanel_right.add(startpage);
+        SwingUtilities.updateComponentTreeUI(jPanel_right);
+    }
     
     
     
     public GUI_Main() {
         initComponents();
+        setStartPage();
     }
 
     /**
