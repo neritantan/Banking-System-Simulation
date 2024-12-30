@@ -63,27 +63,33 @@ public class Main {
             }
 
             Account selectedAccount = customer.accounts.get(accountSelection);
-            System.out.println("Selected Account Info:");
+            System.out.println("\nSelected Account Info:");
             System.out.println(selectedAccount.displayAccountInfo());
 
             System.out.println("\nWhat do you want to do?");
             System.out.println("1- Withdraw");
             System.out.println("2- Deposit");
+            System.out.println("3- View Transaction History");
+            System.out.println("4- Back");
             System.out.print("Your choice: ");
             choice = scanner.nextInt();
             scanner.nextLine(); 
 
-            System.out.print("Please enter the amount: ");
-            double amount = scanner.nextDouble();
-            scanner.nextLine(); 
-
+           
+            double amount;
             try {
                 switch (choice) {
                     case 1:
+                         System.out.print("Please enter the amount: ");
+                         amount = scanner.nextDouble();
+                         scanner.nextLine(); 
                         selectedAccount.withdraw(amount);
                         System.out.println("New balance: " + selectedAccount.getBalance());
                         break;
                     case 2:
+                        System.out.print("Please enter the amount: ");
+                         amount = scanner.nextDouble();
+                         scanner.nextLine(); 
                         selectedAccount.deposit(amount);
                         System.out.println("New balance: " + selectedAccount.getBalance());
                         break;
@@ -185,9 +191,15 @@ public class Main {
                         selectedAccount.deposit(amount);
                         System.out.println("New balance: " + selectedAccount.getBalance());
                         break;
-                    default:
-                        System.out.println("Invalid option, please select a valid action.");
-                        break;
+                    case 3: 
+                            selectedAccount.printTransactionLog(); 
+                            break; 
+                    case 4: 
+                            System.out.println("Returning to account selection..."); 
+                            break; 
+                    default: 
+                            System.out.println("Invalid option, please select a valid action."); 
+                            break;
                 }
             } catch (InsufficientFundsException | InvalidDepositAmountException e) {
                 System.out.println(e.toString());

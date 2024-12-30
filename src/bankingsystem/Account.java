@@ -3,15 +3,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package bankingsystem;
+import java.io.BufferedReader;
 import java.io.File;
 import java.util.Random;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Stack;
 
 /**
  *
@@ -58,14 +61,14 @@ public abstract class Account {
             this.date = new Date();
         }
         
-       public String getFormattedTransactionRecord() { // --> Converts given transactions to Strings
+        public Transaction(){};
+        
+        public String getFormattedTransactionRecord() { // --> Converts given transactions to Strings
             String sign = type.equals("Deposit") ? "+" : "-";
             return String.format("%1$td.%1$tm.%1$tY - %1$tT | %2$s$%3$.2f | %4$s | New Balance : $%5$.2f", 
                          date, sign, Math.abs(amount), type, newBalance);
         }
 
-
-        
         public void saveTransactionToFile(){ // --> Saves transactions to file as Strings
             try{
                 File transactionLogFile = new File(transactionLogsFilePath);
@@ -87,16 +90,30 @@ public abstract class Account {
             }
         }
         
-        //public String getTransactionFromFile();
+        public Stack<String> getTransactionFromFile() {
+            Stack<String> transactionStack = new Stack<>();
+            try {
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(transactionLogsFilePath));
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    transactionStack.push(line);
+                }
+                bufferedReader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("Something went wrong while reading the transaction log.");
+            }
+            return transactionStack;
+        }
+    
+        public void printTransactionsFromStack() {
+            Stack<String> transactionStack = getTransactionFromFile();
+            while (!transactionStack.isEmpty()) {
+                System.out.println(transactionStack.pop());
+            }
+        }     
         
-        
-        
-        
-        
-        
-        
-        
-    }
+        }
     
     
     Account(){};
@@ -132,8 +149,12 @@ public abstract class Account {
     public String getAccountInfoPath() {
         return accountInfoPath;
     }
-
     
+    public void printTransactionLog() {
+        Transaction transaction = new Transaction("Log", 0, this.balance);
+        transaction.printTransactionsFromStack();
+    }
+
     public void withdraw(double amount) throws InsufficientFundsException{
         if(amount > balance)
             throw new InsufficientFundsException(balance,amount);
