@@ -14,18 +14,20 @@ import javax.swing.SwingUtilities;
  */
 public class GUI_Main extends javax.swing.JFrame {
 
-    private GUI_Login login;
+    private GUI_Login loginUI;
     private GUI_Register register;
     private GUI_StartPage startpage;
     private GUI_AccountPanel accountPanel;
+    private GUI_AccountSelection accountSelection;
+    private Login login;
     
     
-    public void setLogin(){
-        if(login == null){
-            login = new GUI_Login();
+    public void setLoginUI(){
+        if(loginUI == null){
+            loginUI = new GUI_Login();
         }
         jPanel_right.removeAll();
-        jPanel_right.add(login);
+        jPanel_right.add(loginUI);
         SwingUtilities.updateComponentTreeUI(jPanel_right);
                 
     }
@@ -59,8 +61,8 @@ public class GUI_Main extends javax.swing.JFrame {
     
     public GUI_Main() {
         initComponents();
-        //setStartPage();
-        setAccountPanel();
+        setStartPage();
+        //setAccountPanel();
     }
 
     /**
@@ -162,13 +164,18 @@ public class GUI_Main extends javax.swing.JFrame {
     private void jButton_LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_LoginActionPerformed
         jButton_Register.setBackground(new Color(44,44,44));
         jButton_Login.setBackground(new Color(77,120,204));
-        setLogin();
+        setLoginUI();
+       
+        
+        accountSelection = new GUI_AccountSelection(loginUI.getCustomer());
+       
     }//GEN-LAST:event_jButton_LoginActionPerformed
 
     private void jButton_RegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RegisterActionPerformed
         jButton_Login.setBackground(new Color(44,44,44));
         jButton_Register.setBackground(new Color(77,120,204));
         setRegister();
+ 
     }//GEN-LAST:event_jButton_RegisterActionPerformed
 
     /**

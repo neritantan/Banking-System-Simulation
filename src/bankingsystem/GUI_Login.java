@@ -4,19 +4,65 @@
  */
 package bankingsystem;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author enesi
  */
 public class GUI_Login extends javax.swing.JPanel {
 
-    /**
-     * Creates new form GUI_Login
-     */
+    private String TCID;
+    private String password;
+    private Customer customer;
     public GUI_Login() {
         initComponents();
-        
+        jLoginButton_L.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            handleLoginButtonClick(evt);
+        }
+    });
+
     }
+    
+    private void handleLoginButtonClick(java.awt.event.ActionEvent evt) {
+    Customer customer = null;
+    Login login = null;
+    boolean error;
+    do {
+        error = false;
+        try {
+            // Login işlemini gerçekleştiriyoruz
+            login = new Login(jTCID_L.getText(), jPassword_L.getText());
+            // Eğer login başarılıysa, müşteri bilgisi alınabilir
+            customer = login.getLoggedCustomer();
+            JOptionPane.showMessageDialog(this, "Login successful! Welcome, " + customer.getFirstName());
+        } catch (CustomerNotFoundException e) {
+            // Kullanıcı bulunamadığında hata mesajı göster
+            JOptionPane.showMessageDialog(this, "Customer not found: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            error = true;
+        } catch (PasswordNotCorrectException e) {
+            // Şifre hatalıysa hata mesajı göster
+            JOptionPane.showMessageDialog(this, "Incorrect password: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            error = true;
+        }
+    } while (error);
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    
+    public String getTCID() {
+        return TCID;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

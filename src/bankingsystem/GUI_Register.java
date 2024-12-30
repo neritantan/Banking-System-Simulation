@@ -18,6 +18,13 @@ public class GUI_Register extends javax.swing.JPanel {
     private String TCID;
     private String password1;
     private String password2;
+    private Customer customer;
+
+    public Customer getCustomer() {
+        return customer;
+    }
+    
+    
     
     public GUI_Register() {
         initComponents();
@@ -234,7 +241,7 @@ public class GUI_Register extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Passwords do not match!", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else{
-            Customer customer = new Customer(firstName, lastName, TCID);// This also needs to take pass info
+            customer = new Customer(firstName, lastName, TCID, password1);// This also needs to take pass info
             JOptionPane.showMessageDialog(null, "Registered Succesfully. ");
         }
         
