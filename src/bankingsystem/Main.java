@@ -93,9 +93,15 @@ public class Main {
                         selectedAccount.deposit(amount);
                         System.out.println("New balance: " + selectedAccount.getBalance());
                         break;
-                    default:
-                        System.out.println("Invalid option, please select a valid action.");
-                        break;
+                    case 3: 
+                            selectedAccount.printTransactionLog(); 
+                            break; 
+                    case 4: 
+                            System.out.println("Returning to account selection..."); 
+                            break; 
+                    default: 
+                            System.out.println("Invalid option, please select a valid action."); 
+                            break;
                 }
             } catch (InsufficientFundsException | InvalidDepositAmountException e) {
                 System.out.println(e.toString());
@@ -191,15 +197,9 @@ public class Main {
                         selectedAccount.deposit(amount);
                         System.out.println("New balance: " + selectedAccount.getBalance());
                         break;
-                    case 3: 
-                            selectedAccount.printTransactionLog(); 
-                            break; 
-                    case 4: 
-                            System.out.println("Returning to account selection..."); 
-                            break; 
-                    default: 
-                            System.out.println("Invalid option, please select a valid action."); 
-                            break;
+                    default:
+                        System.out.println("Invalid option, please select a valid action.");
+                        break;
                 }
             } catch (InsufficientFundsException | InvalidDepositAmountException e) {
                 System.out.println(e.toString());

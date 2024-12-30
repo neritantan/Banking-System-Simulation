@@ -71,7 +71,7 @@ public class CheckingAccount extends Account{
     }
     
     public String displayAccountInfo(){
-        return  ("Account Type: "+accountType
+        return  ("Account Type: "+ getaccountType()
                 +"\nHolder: "+super.getHolderName()
                 + "\nIBAN: "+super.getIBAN()
                 + "\nBalance: $"+super.getBalance());
