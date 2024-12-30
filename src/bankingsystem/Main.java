@@ -51,7 +51,7 @@ public class Main {
                 do {
             System.out.println("\nPlease select an account to perform actions:");
             for (int i = 0; i < customer.accounts.size(); i++) {
-                System.out.println((i + 1) + "- " + customer.accounts.get(i).accountType + " | " + customer.accounts.get(i).getIBAN());
+                System.out.println((i + 1) + "- " + customer.accounts.get(i).getaccountType() + " | " + customer.accounts.get(i).getIBAN());
             }
             System.out.print("Your choice: ");
             accountSelection = scanner.nextInt() - 1;
@@ -128,9 +128,16 @@ public class Main {
          
          switch (choice){
              case 1:// hehehee~~
-                 CheckingAccount account = new CheckingAccount(customer);
-                 customer.accounts.add(account);
+                 CheckingAccount checkingAccount = new CheckingAccount(customer);
+                 customer.accounts.add(checkingAccount);
                  break;
+             case 2:
+                 OverdraftAccount overdraftAccount = new OverdraftAccount(customer);
+                 customer.accounts.add(overdraftAccount);
+                 break;
+             case 3:
+                 SavingsAccount savingsAccount =new SavingsAccount(customer);
+                 customer.accounts.add(savingsAccount);
              default:
                  break;
          }

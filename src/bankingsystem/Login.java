@@ -149,7 +149,15 @@ public class Login {
                     loggedCustomer.accounts.add(checkingAccount);
                 }
                 else if(accountType.equals("Overdraft Account")){
-                    
+                    bufferedReader.readLine();
+                    String IBAN = bufferedReader.readLine();
+                    double balance = Double.parseDouble(bufferedReader.readLine());
+                    double draftLimit = Double.parseDouble(bufferedReader.readLine());
+                    double draftLeft = Double.parseDouble(bufferedReader.readLine());
+                    OverdraftAccount overdraftAccount = new OverdraftAccount(loggedCustomer, balance, IBAN, accountInfoPath, accountType);
+                    overdraftAccount.draftLimit = draftLimit;
+                    overdraftAccount.draftLeft = draftLeft;
+                    loggedCustomer.accounts.add(overdraftAccount);
                 }
                 else if(accountType.equals("Savings Account")){
                     

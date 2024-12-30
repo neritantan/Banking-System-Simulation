@@ -14,12 +14,23 @@ import java.io.IOException;
  * @author enesi
  */
 public class CheckingAccount extends Account{
-    String accountType = "Checking Account";
+    String accountType;
     
     public CheckingAccount(Customer holder) {
         super(holder);
+        accountType = "Checking Account";
         createAccount();
         System.out.println("Account Created Succesfully!!"); // WILL BE A POP-UP WINDOW
+    }
+    
+    public CheckingAccount(Customer holder, String accountType){
+        super(holder);
+        this.accountType = accountType;
+        System.out.println("In the accountType Constructor");
+        System.out.println("Account type gathered from child is: "+accountType);
+        System.out.println("Current account type is: "+this.accountType);
+        createAccount();
+        System.out.println("Account Created Succesfully!!");
     }
     
     public CheckingAccount(Customer holder, double balance, String IBAN, String accountInfoPath, String accounType){
@@ -66,10 +77,13 @@ public class CheckingAccount extends Account{
                 + "\nBalance: $"+super.getBalance());
     }
     
+    public String getaccountType(){
+        return "Checking Account";
+    }
     
     public String accountInfo(){// This part will be written into accountInfo.txt// WORK IN PROGRESS
         
-        return (accountType+"\n"
+        return (this.accountType+"\n"
                 +super.getHolderName()+"\n"
                 +super.getIBAN()+"\n"
                 +super.getBalance()+"\n");

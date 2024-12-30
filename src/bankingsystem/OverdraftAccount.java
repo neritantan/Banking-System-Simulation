@@ -12,22 +12,26 @@ import java.util.Scanner;
  *
  * @author enesi
  */
-public class OverdraftAccount extends Account{
-    String accountType = "Overdraft Account";
+public class OverdraftAccount extends CheckingAccount{
+    //String accountType = "Overdraft Account";
     double draftLimit = 5000;
     double draftLeft;
     
     public OverdraftAccount(Customer holder) {
-        super(holder);
+        super(holder,"Overdraft Account");
         draftLeft = draftLimit;
     }
     
     public OverdraftAccount(Customer holder,double draftLimit){// Polymorphism
-        super(holder);
+        super(holder,"Overdraft Account");
         this.draftLimit = draftLimit;
         draftLeft = draftLimit;
     }
     
+    public OverdraftAccount(Customer holder, double balance, String IBAN, String accountInfoPath, String accounType){
+        super(holder,balance,IBAN,accountInfoPath,accounType);
+        this.accountType = accountType;
+    }
     private void createAccount(){//customers/"+holder.getTCID()+"/"+this.IBAN
         String accountFileName = ("customers/"+super.holder.getTCID()+"/"+super.getIBAN());
         File accountFile = new File(accountFileName);
@@ -58,11 +62,12 @@ public class OverdraftAccount extends Account{
     }
     
     public String displayAccountInfo(){
-        return  ("Account Type: "+accountType
+        return  ("Account Type: "+getaccountType()
                 +"\nHolder: "+super.getHolderName()
                 + "\nIBAN: "+super.getIBAN()
                 + "\nBalance: $"+super.getBalance()
-                +"/n Draft Limit: ");
+                +"\nDraft Limit: "+draftLimit
+                +"\nDraft Left: "+draftLeft);
     }
     
     @Override
@@ -77,7 +82,7 @@ public class OverdraftAccount extends Account{
             }
             else{
                 String yesNo;
-                System.out.println("You don't have enough balance to withdraw $"+amount+". Would you like to use cash advance to continue transaction?");
+                System.out.println("You don't have enough balance to withdraw $"+amount+". Would you like to use cash advance to continue transaction? (y/n)");
                 System.out.println("(Remaining $"+(amount-super.getBalance())+" will be used from your cash advance.)");
                 yesNo = scanner.nextLine();
                 if(yesNo.equals("y")){
@@ -96,6 +101,11 @@ public class OverdraftAccount extends Account{
                 }
             }
         }
+    }
+    
+    @Override
+     public String getaccountType(){
+        return "Overdraft Account";
     }
     
     public String accountInfo(){// This part will be written into accountInfo.txt

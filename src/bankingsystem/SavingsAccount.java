@@ -13,13 +13,13 @@ import java.io.IOException;
  *
  * @author enesi
  */
-public class SavingsAccount extends Account{
-    String accountType = "Savings Account";
+public class SavingsAccount extends CheckingAccount{
+    //String accountType = "Savings Account";
     double interestRate;
     double days = 0;
     
     SavingsAccount(Customer holder){
-        super(holder);
+        super(holder,"Saving Account");
     }
     
     private void createAccount(){//customers/"+holder.getTCID()+"/"+this.IBAN
@@ -49,6 +49,11 @@ public class SavingsAccount extends Account{
        catch (IOException e) {
         e.getMessage();
     }  
+    }
+    
+    @Override
+    public String getaccountType(){
+        return "Savings Account";
     }
     
     public String displayAccountInfo(){
