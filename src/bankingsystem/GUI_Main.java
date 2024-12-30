@@ -5,6 +5,7 @@
 package bankingsystem;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import java.awt.CardLayout;
 import java.awt.Color;
 import javax.swing.SwingUtilities;
 
@@ -13,7 +14,8 @@ import javax.swing.SwingUtilities;
  * @author enesi
  */
 public class GUI_Main extends javax.swing.JFrame {
-
+    
+    private CardLayout cardLayout;//
     private GUI_Login loginUI;
     private GUI_Register register;
     private GUI_StartPage startpage;
@@ -57,9 +59,19 @@ public class GUI_Main extends javax.swing.JFrame {
 
     }
     
+    public void setAccountSelectionPanel(){
+        accountSelection = new GUI_AccountSelection(loginUI.getCustomer());
+        
+        jPanel_right.removeAll();
+        jPanel_right.add(accountSelection);
+        SwingUtilities.updateComponentTreeUI(jPanel_right);
+    }
+    
     
     
     public GUI_Main() {
+        cardLayout = new CardLayout();//
+        setLayout(cardLayout);
         initComponents();
         setStartPage();
         //setAccountPanel();
@@ -140,7 +152,7 @@ public class GUI_Main extends javax.swing.JFrame {
         );
 
         jPanel_right.setPreferredSize(new java.awt.Dimension(700, 540));
-        jPanel_right.setLayout(new java.awt.BorderLayout());
+        jPanel_right.setLayout(new java.awt.CardLayout());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -166,8 +178,9 @@ public class GUI_Main extends javax.swing.JFrame {
         jButton_Login.setBackground(new Color(77,120,204));
         setLoginUI();
        
-        
-        accountSelection = new GUI_AccountSelection(loginUI.getCustomer());
+        if(loginUI.isLogged)
+            setAccountSelectionPanel();
+        //accountSelection = new GUI_AccountSelection(loginUI.getCustomer());
        
     }//GEN-LAST:event_jButton_LoginActionPerformed
 
@@ -175,7 +188,8 @@ public class GUI_Main extends javax.swing.JFrame {
         jButton_Login.setBackground(new Color(44,44,44));
         jButton_Register.setBackground(new Color(77,120,204));
         setRegister();
- 
+        
+        
     }//GEN-LAST:event_jButton_RegisterActionPerformed
 
     /**

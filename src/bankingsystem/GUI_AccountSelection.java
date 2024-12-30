@@ -31,7 +31,7 @@ public class GUI_AccountSelection extends javax.swing.JPanel {
            jPanel1.repaint();  // Yeniden çizim yap
          
      }
-    private void showAccountSelectionScreen(Customer customer) {
+    public void showAccountSelectionScreen(Customer customer) {
     // Paneli yeniden ayarla
     jPanel1.setLayout(new GridLayout(customer.accounts.size() + 2, 1, 10, 10));
 

@@ -15,6 +15,9 @@ public class GUI_Login extends javax.swing.JPanel {
     private String TCID;
     private String password;
     private Customer customer;
+    public boolean isLogged;
+    
+    
     public GUI_Login() {
         initComponents();
         jLoginButton_L.addActionListener(new java.awt.event.ActionListener() {
@@ -29,6 +32,7 @@ public class GUI_Login extends javax.swing.JPanel {
     Customer customer = null;
     Login login = null;
     boolean error;
+    GUI_AccountSelection accountSelection = null;
     do {
         error = false;
         try {
@@ -37,6 +41,7 @@ public class GUI_Login extends javax.swing.JPanel {
             // Eğer login başarılıysa, müşteri bilgisi alınabilir
             customer = login.getLoggedCustomer();
             JOptionPane.showMessageDialog(this, "Login successful! Welcome, " + customer.getFirstName());
+            accountSelection = new GUI_AccountSelection(customer);
         } catch (CustomerNotFoundException e) {
             // Kullanıcı bulunamadığında hata mesajı göster
             JOptionPane.showMessageDialog(this, "Customer not found: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -47,8 +52,15 @@ public class GUI_Login extends javax.swing.JPanel {
             error = true;
         }
     } while (error);
+    
+    
+        //accountSelection.showAccountSelectionScreen(customer);
+        if(customer != null)
+            isLogged = true;
+        JOptionPane.showMessageDialog(this, "Kanka showAccountSelectionScreen çalıştı btw", "Error", JOptionPane.ERROR_MESSAGE);
+    
     }
-
+    
     public Customer getCustomer() {
         return customer;
     }
@@ -98,6 +110,11 @@ public class GUI_Login extends javax.swing.JPanel {
         jLoginButton_L.setFont(new java.awt.Font("Segoe UI Semibold", 0, 16)); // NOI18N
         jLoginButton_L.setForeground(new java.awt.Color(253, 253, 253));
         jLoginButton_L.setText("Login");
+        jLoginButton_L.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jLoginButton_LActionPerformed(evt);
+            }
+        });
 
         jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\enesi\\Desktop\\Module Project\\Banking System Simulation\\src\\usericon.png")); // NOI18N
 
@@ -148,6 +165,10 @@ public class GUI_Login extends javax.swing.JPanel {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jLoginButton_LActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLoginButton_LActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLoginButton_LActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
