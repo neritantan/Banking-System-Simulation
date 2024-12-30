@@ -15,6 +15,7 @@ public class GUI_Login extends javax.swing.JPanel {
      */
     public GUI_Login() {
         initComponents();
+        
     }
 
     /**

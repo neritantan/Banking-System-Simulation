@@ -17,6 +17,7 @@ public class GUI_Main extends javax.swing.JFrame {
     private GUI_Login login;
     private GUI_Register register;
     private GUI_StartPage startpage;
+    private GUI_AccountPanel accountPanel;
     
     
     public void setLogin(){
@@ -40,15 +41,26 @@ public class GUI_Main extends javax.swing.JFrame {
     
     public void setStartPage(){
         startpage = new GUI_StartPage();
+        jPanel_right.removeAll();
          jPanel_right.add(startpage);
         SwingUtilities.updateComponentTreeUI(jPanel_right);
+    }
+    
+    public void setAccountPanel(){
+        accountPanel = new GUI_AccountPanel("Checking Account", "John Doe", 5236.21, "TR50 0001 5000 3200 4258 5862");
+
+        jPanel_right.removeAll();
+        jPanel_right.add(accountPanel);
+        SwingUtilities.updateComponentTreeUI(jPanel_right);
+
     }
     
     
     
     public GUI_Main() {
         initComponents();
-        setStartPage();
+        //setStartPage();
+        setAccountPanel();
     }
 
     /**
