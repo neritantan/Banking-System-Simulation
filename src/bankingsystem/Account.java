@@ -50,6 +50,7 @@ public abstract class Account {
     private class Transaction{
         private String type;
         private double amount;
+        private String otherCustomersName;
         private double newBalance;
         private Date date;
         public String transactionLogsFilePath = ("customers/"+holder.getTCID()+"/"+IBAN+"/transactions.log");
@@ -61,9 +62,17 @@ public abstract class Account {
             this.date = new Date();
         }
         
+        public Transaction(String type, double amount,String otherCustomersName, double newBalance){
+            this.type = type;
+            this.amount = amount;
+            this.otherCustomersName = otherCustomersName;
+            this.newBalance = newBalance;
+            this.date = new Date();
+        }
+        
         public Transaction(){};
         
-        public String getFormattedTransactionRecord() { // --> Converts given transactions to Strings
+        public String getFormattedTransactionRecord() { // --> Converts given transactions to Strings// Will be unique for EFTs //WIP
             String sign = type.equals("Deposit") ? "+" : "-";
             return String.format("%1$td.%1$tm.%1$tY - %1$tT | %2$s$%3$.2f | %4$s | New Balance : $%5$.2f", 
                          date, sign, Math.abs(amount), type, newBalance);
@@ -112,13 +121,18 @@ public abstract class Account {
                 System.out.println(transactionStack.pop());
             }
         }     
+
+        public String getTransactionLogsFilePath() {
+            return transactionLogsFilePath;
+        }
+        
         
         }
     
     
     Account(){};
 
-    public Account(Customer holder) {// WORK IN PROGRESS  //NEED TO CREATE A AccountInfo.txt file 
+    public Account(Customer holder) {
         this.holder = holder;
         balance = 0.00;
         this.IBAN = IBANGenerator.generate();
@@ -150,8 +164,13 @@ public abstract class Account {
         return accountInfoPath;
     }
     
+    public String getTransactionLogPath(){
+        Transaction transaction = new Transaction();
+        return transaction.getTransactionLogsFilePath();
+    }
+    
     public void printTransactionLog() {
-        Transaction transaction = new Transaction("Log", 0, this.balance);
+        Transaction transaction = new Transaction();
         transaction.printTransactionsFromStack();
     }
 
@@ -180,6 +199,18 @@ public abstract class Account {
             transaction.saveTransactionToFile();
         }
         
+    }
+    
+    public void EFTwithdraw(double amount, String receiverName) throws InsufficientFundsException{// WORK IN PROGRESS
+         if(amount > balance)
+            throw new InsufficientFundsException(balance,amount);
+        else{
+            balance -= amount;
+            System.out.println("$"+amount+" has been succesfully withdrawed from your account and sent to"+receiverName);
+            updateAccountInfo();
+            Transaction transaction = new Transaction("EFT",amount,receiverName,this.balance);
+            transaction.saveTransactionToFile();
+        }
     }
     
     private void updateAccountInfo() {
