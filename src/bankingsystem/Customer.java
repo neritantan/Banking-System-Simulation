@@ -20,6 +20,9 @@ public class Customer {
    private String password;
    public ArrayList<CheckingAccount> accounts;
    
+   public Customer(String fullName){
+        this.fullName = fullName;
+   }
    
    public Customer(String firstName, String lastName, String TCID) {
         this.firstName = firstName;

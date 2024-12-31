@@ -30,8 +30,13 @@ public class EFT {
            CheckingAccount senderAccount = loadAccount(senderAccountInfoPath);
            CheckingAccount receiverAccount = loadAccount(receiverAccountInfoPath);
            
-           senderAccount.EFTwithdraw(amount, receiverAccount.getHolderName());//WIP
-           receiverAccount.EFTdeposit(amount, senderAccount.getHolderName());//WIP
+           senderAccount.EFTwithdraw(amount, receiverAccount.getHolderName());//WIP// I guess it's done
+           receiverAccount.EFTdeposit(amount, senderAccount.getHolderName());//WIP// I guess it's done
+           
+           System.out.println("$"+amount+" succesfully transferred to "+receiverAccount.getHolderName());
+       }
+       else {
+           System.out.println("IBAN not found. Please check the IBAN and try again.");// Will probably throw an exception IBANNotFoundException
        }
        
    }
@@ -49,7 +54,8 @@ public class EFT {
                 fullName = bufferedReader.readLine();
                 String checkingIBAN = bufferedReader.readLine();
                 double checkingBalance = Double.parseDouble(bufferedReader.readLine());
-                CheckingAccount checkingAccount = new CheckingAccount(customer = new Customer(fullName), checkingBalance, checkingIBAN, accountInfoPath, accountType);
+                customer = new Customer(fullName);
+                CheckingAccount checkingAccount = new CheckingAccount(customer, checkingBalance, checkingIBAN, accountInfoPath, accountType);
                 
                 return checkingAccount;
                 
@@ -59,7 +65,8 @@ public class EFT {
                 double overdraftBalance = Double.parseDouble(bufferedReader.readLine());
                 double draftLimit = Double.parseDouble(bufferedReader.readLine());
                 double draftLeft = Double.parseDouble(bufferedReader.readLine());
-                OverdraftAccount overdraftAccount = new OverdraftAccount(customer = new Customer(fullName), overdraftBalance, overdraftIBAN, accountInfoPath, accountType);
+                customer = new Customer(fullName);
+                OverdraftAccount overdraftAccount = new OverdraftAccount(customer, overdraftBalance, overdraftIBAN, accountInfoPath, accountType);
                 overdraftAccount.draftLimit = draftLimit;
                 overdraftAccount.draftLeft = draftLeft;
                 
