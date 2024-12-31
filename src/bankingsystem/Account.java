@@ -73,9 +73,23 @@ public abstract class Account {
         public Transaction(){};
         
         public String getFormattedTransactionRecord() { // --> Converts given transactions to Strings// Will be unique for EFTs //WIP
-            String sign = type.equals("Deposit") ? "+" : "-";
-            return String.format("%1$td.%1$tm.%1$tY - %1$tT | %2$s$%3$.2f | %4$s | New Balance : $%5$.2f", 
-                         date, sign, Math.abs(amount), type, newBalance);
+            String sign;
+            if(type.equals("EFTDeposit")){
+                sign ="+";
+                    return String.format("%1$td.%1$tm.%1$tY - %1$tT | %2$s$%3$.2f from %4$s | EFT | New Balance : $%5$.2f"
+                                            , date, sign, Math.abs(amount), otherCustomersName, newBalance);
+            }
+            else if(type.equals("EFTWithdraw")){
+                sign = "-";
+                    return String.format("%1$td.%1$tm.%1$tY - %1$tT | %2$s$%3$.2f to %4$s | EFT | New Balance : $%5$.2f"
+                                            , date, sign, Math.abs(amount), otherCustomersName, newBalance);
+            }
+            else{
+            sign = type.equals("Deposit") ? "+" : "-";
+                    return String.format("%1$td.%1$tm.%1$tY - %1$tT | %2$s$%3$.2f | %4$s | New Balance : $%5$.2f", 
+                                 date, sign, Math.abs(amount), type, newBalance);
+            }
+            
         }
 
         public void saveTransactionToFile(){ // --> Saves transactions to file as Strings
@@ -206,11 +220,25 @@ public abstract class Account {
             throw new InsufficientFundsException(balance,amount);
         else{
             balance -= amount;
-            System.out.println("$"+amount+" has been succesfully withdrawed from your account and sent to"+receiverName);
+            System.out.println("$"+amount+" has been succesfully sent to "+receiverName+".");
             updateAccountInfo();
-            Transaction transaction = new Transaction("EFT",amount,receiverName,this.balance);
+            Transaction transaction = new Transaction("EFTWithdraw",amount,receiverName,this.balance);
             transaction.saveTransactionToFile();
         }
+    }
+    
+    public void EFTdeposit(double amount, String senderName) throws InvalidDepositAmountException{
+            if(amount <= 0){
+        throw new InvalidDepositAmountException(amount);
+    }
+        else{
+            balance += amount;
+            System.out.println("$"+amount+" has been succesfully received from "+senderName+".");
+            updateAccountInfo();
+            Transaction transaction = new Transaction("EFTDeposit",amount,senderName,this.balance);
+            transaction.saveTransactionToFile();
+        }
+        
     }
     
     private void updateAccountInfo() {

@@ -30,8 +30,8 @@ public class EFT {
            CheckingAccount senderAccount = loadAccount(senderAccountInfoPath);
            CheckingAccount receiverAccount = loadAccount(receiverAccountInfoPath);
            
-           //senderAccount.EFTwithdraw(amount, receiverAccount.getfullName);//WIP
-           //receiverAccount.EFTdeposit(amount, senderAccount.getfullName);//WIP
+           senderAccount.EFTwithdraw(amount, receiverAccount.getHolderName());//WIP
+           receiverAccount.EFTdeposit(amount, senderAccount.getHolderName());//WIP
        }
        
    }
