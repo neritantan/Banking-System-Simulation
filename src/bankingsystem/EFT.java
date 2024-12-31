@@ -9,6 +9,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -17,10 +18,75 @@ import java.util.HashMap;
  */
 public class EFT {
    private static HashMap<String,String> IBANDataBase = new HashMap<>();
+   private static final String DATABASE_FILE_NAME = "IBANDataBase.txt";
+
+   public static void setupDataBase() {
+        File dataBaseFile = new File(DATABASE_FILE_NAME);
+        if (dataBaseFile.exists()) {
+            try {
+                FileReader fileReader = new FileReader(dataBaseFile); 
+                BufferedReader bufferedReader = new BufferedReader(fileReader); 
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    String[] parts = line.split(",", 2); 
+                    if (parts.length == 2) {
+                        IBANDataBase.put(parts[0], parts[1]);
+                    }
+                }
+                System.out.println("IBANDataBase successfully loaded.");
+                bufferedReader.close(); 
+                fileReader.close(); 
+            } catch (IOException e) {
+                System.out.println("Error reading database file: " + e.getMessage());
+            }
+        }
+
+        else {
+            System.out.println("No existing database file found. Starting fresh.");
+        }
+    }// Call at the beginning of main
    
-   public static void addAccount(String IBAN, String accountInfoPath){
-       IBANDataBase.put(IBAN, accountInfoPath);
-   }
+   public static void updateDataBase() {
+        File dataBaseFile = new File(DATABASE_FILE_NAME);
+        
+        if (!dataBaseFile.exists()) {
+            try {
+                dataBaseFile.createNewFile();
+            } catch (IOException e) {
+                System.out.println("Error creating database file: " + e.getMessage());
+                return; 
+            }
+        }
+
+        
+        try {
+            FileWriter fileWriter = new FileWriter(DATABASE_FILE_NAME, false);  
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+            // Veritabanını dosyaya yaz
+            for (String IBAN : IBANDataBase.keySet()) {
+                String accountInfoPath = IBANDataBase.get(IBAN);
+                bufferedWriter.write(IBAN + "," + accountInfoPath);
+                bufferedWriter.newLine();
+            }
+
+            bufferedWriter.close();
+            fileWriter.close();
+            System.out.println("IBANDataBase successfully updated.");
+
+        } catch (IOException e) {
+            System.out.println("Error updating database file: " + e.getMessage());
+        }
+    }// Call whenever you create an account
+
+   public static void addAccount(String IBAN, String accountInfoPath) {
+        IBANDataBase.put(IBAN, accountInfoPath);
+        updateDataBase(); 
+    }
+
+   public static boolean isDataBaseExist() {
+        return !IBANDataBase.isEmpty();
+    }
    
    public static void transfer(String senderIBAN,String receiverIBAN,double amount) throws InsufficientFundsException, InvalidDepositAmountException{
        String senderAccountInfoPath = IBANDataBase.get(senderIBAN);

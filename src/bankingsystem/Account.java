@@ -146,18 +146,20 @@ public abstract class Account {
     
     Account(){};
 
-    public Account(Customer holder) {
+    public Account(Customer holder) { //Default Method to create an Account
         this.holder = holder;
         balance = 0.00;
         this.IBAN = IBANGenerator.generate();
         accountInfoPath = ("customers/"+holder.getTCID()+"/"+this.IBAN+"/accountInfo.txt");
+        EFT.addAccount(this.IBAN, accountInfoPath);// --> TO add this account to IBANDataBase
     }
 
-    public Account(Customer holder, double balance, String IBAN, String accountInfoPath) {
+    public Account(Customer holder, double balance, String IBAN, String accountInfoPath) { //For creating from File
         this.holder = holder;
         this.balance = balance;
         this.IBAN = IBAN;
         this.accountInfoPath = accountInfoPath;
+        EFT.addAccount(this.IBAN, this.accountInfoPath);// --> To add this account to IBANDataBase
     }
     
     
