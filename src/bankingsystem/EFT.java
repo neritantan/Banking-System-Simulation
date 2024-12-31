@@ -63,7 +63,7 @@ public class EFT {
             FileWriter fileWriter = new FileWriter(DATABASE_FILE_NAME, false);  
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
-            // Veritabanını dosyaya yaz
+          
             for (String IBAN : IBANDataBase.keySet()) {
                 String accountInfoPath = IBANDataBase.get(IBAN);
                 bufferedWriter.write(IBAN + "," + accountInfoPath);
@@ -120,7 +120,7 @@ public class EFT {
                 fullName = bufferedReader.readLine();
                 String checkingIBAN = bufferedReader.readLine();
                 double checkingBalance = Double.parseDouble(bufferedReader.readLine());
-                customer = new Customer(fullName);
+                customer = new Customer(fullName,extractTCIDFromAccountInfoPath(accountInfoPath));
                 CheckingAccount checkingAccount = new CheckingAccount(customer, checkingBalance, checkingIBAN, accountInfoPath, accountType);
                 
                 return checkingAccount;
@@ -131,7 +131,7 @@ public class EFT {
                 double overdraftBalance = Double.parseDouble(bufferedReader.readLine());
                 double draftLimit = Double.parseDouble(bufferedReader.readLine());
                 double draftLeft = Double.parseDouble(bufferedReader.readLine());
-                customer = new Customer(fullName);
+                customer = new Customer(fullName,extractTCIDFromAccountInfoPath(accountInfoPath));
                 OverdraftAccount overdraftAccount = new OverdraftAccount(customer, overdraftBalance, overdraftIBAN, accountInfoPath, accountType);
                 overdraftAccount.draftLimit = draftLimit;
                 overdraftAccount.draftLeft = draftLeft;
@@ -150,7 +150,14 @@ public class EFT {
       return null;      
    }
    
-   
+   public static String extractTCIDFromAccountInfoPath(String accountInfoPath) {// --> IBANDataBase.get(givenIBAN) --> gives the path
+    // accountInfoPath example: "customers/16452318742/TR23 4817 1100 9868 1134 80/accountInfo.txt"
+    String[] parts = accountInfoPath.split("/"); 
+    if (parts.length > 1) {
+        return parts[1]; 
+    }
+    return null; 
+}
    
    
    

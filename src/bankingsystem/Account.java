@@ -110,6 +110,7 @@ public abstract class Account {
             catch(IOException e){
                 e.getMessage();
                 System.out.println("Something went wrong while saving Transaction Log.");
+                System.out.println("transactionLogsFilePath = "+transactionLogsFilePath);// To check if the culprit is TCID
             }
         }
         

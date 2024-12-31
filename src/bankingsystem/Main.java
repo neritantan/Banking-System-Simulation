@@ -77,13 +77,14 @@ public class Main {
                         System.out.println("\nWhat do you want to do?");
                         System.out.println("1- Withdraw");
                         System.out.println("2- Deposit");
-                        System.out.println("3- View Transaction History");
-                        System.out.println("4- Back");
+                        System.out.println("3- EFT to IBAN");
+                        System.out.println("4- View Transaction History");
+                        System.out.println("5- Back");
                         System.out.print("Your choice: ");
                         choice = scanner.nextInt();
                         scanner.nextLine();
 
-                        if (choice == 4) {
+                        if (choice == 5) {
                             backToAccountSelection = true;
                             break;
                         }
@@ -106,6 +107,16 @@ public class Main {
                                     System.out.println("New balance: " + selectedAccount.getBalance());
                                     break;
                                 case 3:
+                                    
+                                    System.out.println("Please enter receiver's IBAN: ");
+                                    String receiverIBAN = scanner.nextLine();
+                                    System.out.print("Please enter the amount: ");
+                                    amount = scanner.nextDouble();
+                                    scanner.nextLine();
+                                    EFT.transfer(selectedAccount.getIBAN(), receiverIBAN, amount);
+                                    
+                                    break;
+                                case 4:
                                     selectedAccount.printTransactionLog();
                                     break;
                                 default:
