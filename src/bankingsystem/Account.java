@@ -240,7 +240,7 @@ public abstract class Account {
         
     }
     
-    private void updateAccountInfo() {
+    public void updateAccountInfo() {
     try {
         File accountFile = new File(accountInfoPath);
         List<String> lines = Files.readAllLines(accountFile.toPath());

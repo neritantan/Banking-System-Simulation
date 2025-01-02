@@ -160,23 +160,42 @@ public class Login {
                     overdraftAccount.draftLeft = draftLeft;//Probably Unused
                     loggedCustomer.accounts.add(overdraftAccount);
                 }
-                else if(accountType.equals("Savings Account")){
-                                                                ///WILL BE FILLED
-                    bufferedReader.readLine();
+                else if (accountType.equals("Savings Account")) {
+                try {
+                    bufferedReader.readLine(); // Skip one line
                     String savingsIBAN = bufferedReader.readLine();
                     double savingsBalance = Double.parseDouble(bufferedReader.readLine());
                     double interestRate = Double.parseDouble(bufferedReader.readLine());
                     double investedAmount = Double.parseDouble(bufferedReader.readLine());
                     double savingsSavingsBalance = Double.parseDouble(bufferedReader.readLine());
-                    LocalDate investmentDate = LocalDate.parse(bufferedReader.readLine());
-                    LocalDate currentDay = LocalDate.now(); //SHOULD BE SET WORK IN PROGRESS
 
-                    SavingsAccount savingsAccount = new SavingsAccount(loggedCustomer, savingsBalance, savingsIBAN,
-                                                                       accountInfoPath, accountType, interestRate,
-                                                                       investedAmount, savingsSavingsBalance, investmentDate,
-                                                                       currentDay);
+                   
+                    String dateStr = bufferedReader.readLine();
+                    LocalDate investmentDate = null;
+                    if (dateStr != null && !dateStr.equals("null") && !dateStr.trim().isEmpty()) {//
+                        investmentDate = LocalDate.parse(dateStr);                                // NULL CHECK
+                    }                                                                             //  
+                    LocalDate currentDay = LocalDate.now();
+
+                    System.out.println("Creating Savings Account with IBAN: " + savingsIBAN); 
+
+                    SavingsAccount savingsAccount = new SavingsAccount(loggedCustomer, 
+                                                                     savingsBalance, 
+                                                                     savingsIBAN,
+                                                                     accountInfoPath, 
+                                                                     accountType, 
+                                                                     interestRate,
+                                                                     investedAmount, 
+                                                                     savingsSavingsBalance, 
+                                                                     investmentDate,  
+                                                                     currentDay);
                     loggedCustomer.accounts.add(savingsAccount);
+                    System.out.println("Savings Account added successfully"); 
+                } catch (Exception e) {
+                    System.out.println("Error creating Savings Account: " + e.getMessage());
+                    e.printStackTrace();
                 }
+            }
                 
             }catch(Exception e){
                 e.getMessage();
