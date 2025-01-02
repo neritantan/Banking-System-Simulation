@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.HashMap;
 
 /**
@@ -132,15 +133,29 @@ public class EFT {
                 double draftLimit = Double.parseDouble(bufferedReader.readLine());
                 double draftLeft = Double.parseDouble(bufferedReader.readLine());
                 customer = new Customer(fullName,extractTCIDFromAccountInfoPath(accountInfoPath));
-                OverdraftAccount overdraftAccount = new OverdraftAccount(customer, overdraftBalance, overdraftIBAN, accountInfoPath, accountType);
-                overdraftAccount.draftLimit = draftLimit;
-                overdraftAccount.draftLeft = draftLeft;
+                OverdraftAccount overdraftAccount = new OverdraftAccount(customer, overdraftBalance, overdraftIBAN, accountInfoPath, accountType,draftLimit, draftLeft);
+                overdraftAccount.draftLimit = draftLimit;//Probably Unused
+                overdraftAccount.draftLeft = draftLeft;//Probably Unused
                 
                 return overdraftAccount;
                 
             case "Savings Account":
-                // WILL BE FILLED
-                break;
+                fullName = bufferedReader.readLine();
+                String savingsIBAN = bufferedReader.readLine();
+                double savingsBalance = Double.parseDouble(bufferedReader.readLine());
+                double interestRate = Double.parseDouble(bufferedReader.readLine());
+                double investedAmount = Double.parseDouble(bufferedReader.readLine());
+                double savingsSavingsBalance = Double.parseDouble(bufferedReader.readLine());
+                LocalDate investmentDate = LocalDate.parse(bufferedReader.readLine());
+                LocalDate currentDay = LocalDate.now(); //SHOULD BE SET WORK IN PROGRESS
+                
+                customer = new Customer(fullName,extractTCIDFromAccountInfoPath(accountInfoPath));
+                SavingsAccount savingsAccount = new SavingsAccount(customer, savingsBalance, savingsIBAN,
+                                                                   accountInfoPath, accountType, interestRate,
+                                                                   investedAmount, savingsSavingsBalance, investmentDate,
+                                                                   currentDay);
+                return savingsAccount;
+                
             default:
                 throw new IllegalArgumentException("Unknown account type: " + accountType);
                 }

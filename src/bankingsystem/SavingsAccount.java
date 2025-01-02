@@ -8,20 +8,31 @@ import java.time.LocalDate;
 
 public class SavingsAccount extends CheckingAccount {
     double interestRate = 0.02; 
-    LocalDate investmentDate;   
     double investedAmount = 0;  
     double savingsBalance = 0;  
-
+    LocalDate investmentDate;   
     SavingsAccount(Customer holder) {
         super(holder, "Saving Account");
 
     }
     
-    SavingsAccount(Customer holder,LocalDate currentDay ) { // Use this while creating from file
-        super(holder, "Saving Account");
+    SavingsAccount(Customer holder, double balance, String IBAN, String accountInfoPath,
+                   String accountType, double interestRate, double investedAmount, double savingsBalance,
+                   LocalDate investmentDate, LocalDate currentDay ) { // Use this while creating from file
+        
+        super(holder,balance,IBAN,accountInfoPath,accountType);
+        this.accountType = accountType;
+        this.interestRate = interestRate;
+        this.investedAmount = investedAmount;
+        this.savingsBalance = savingsBalance;
+        this.investmentDate = investmentDate;
+        
         applyInterest(currentDay);
     }
 
+    
+    
+    
     private void createAccount() { // customers/"+holder.getTCID()+"/"+this.IBAN
         String accountFileName = ("customers/" + super.holder.getTCID() + "/" + super.getIBAN());
         File accountFile = new File(accountFileName);
@@ -63,6 +74,7 @@ public class SavingsAccount extends CheckingAccount {
                 super.getHolderName() + "\n" + 
                 super.getIBAN() + "\n" + 
                 super.getBalance() + "\n" + 
+                interestRate   + "\n" +
                 investedAmount + "\n" + 
                 savingsBalance + "\n" + 
                 investmentDate + "\n");

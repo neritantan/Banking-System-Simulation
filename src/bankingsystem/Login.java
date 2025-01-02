@@ -7,6 +7,7 @@ package bankingsystem;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.time.LocalDate;
 
 /**
  *
@@ -154,13 +155,27 @@ public class Login {
                     double balance = Double.parseDouble(bufferedReader.readLine());
                     double draftLimit = Double.parseDouble(bufferedReader.readLine());
                     double draftLeft = Double.parseDouble(bufferedReader.readLine());
-                    OverdraftAccount overdraftAccount = new OverdraftAccount(loggedCustomer, balance, IBAN, accountInfoPath, accountType);
-                    overdraftAccount.draftLimit = draftLimit;
-                    overdraftAccount.draftLeft = draftLeft;
+                    OverdraftAccount overdraftAccount = new OverdraftAccount(loggedCustomer, balance, IBAN, accountInfoPath, accountType ,draftLimit, draftLeft);
+                    overdraftAccount.draftLimit = draftLimit;//Probably Unused
+                    overdraftAccount.draftLeft = draftLeft;//Probably Unused
                     loggedCustomer.accounts.add(overdraftAccount);
                 }
                 else if(accountType.equals("Savings Account")){
-                    
+                                                                ///WILL BE FILLED
+                    bufferedReader.readLine();
+                    String savingsIBAN = bufferedReader.readLine();
+                    double savingsBalance = Double.parseDouble(bufferedReader.readLine());
+                    double interestRate = Double.parseDouble(bufferedReader.readLine());
+                    double investedAmount = Double.parseDouble(bufferedReader.readLine());
+                    double savingsSavingsBalance = Double.parseDouble(bufferedReader.readLine());
+                    LocalDate investmentDate = LocalDate.parse(bufferedReader.readLine());
+                    LocalDate currentDay = LocalDate.now(); //SHOULD BE SET WORK IN PROGRESS
+
+                    SavingsAccount savingsAccount = new SavingsAccount(loggedCustomer, savingsBalance, savingsIBAN,
+                                                                       accountInfoPath, accountType, interestRate,
+                                                                       investedAmount, savingsSavingsBalance, investmentDate,
+                                                                       currentDay);
+                    loggedCustomer.accounts.add(savingsAccount);
                 }
                 
             }catch(Exception e){

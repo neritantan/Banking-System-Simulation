@@ -28,9 +28,11 @@ public class OverdraftAccount extends CheckingAccount{
         draftLeft = draftLimit;
     }
     
-    public OverdraftAccount(Customer holder, double balance, String IBAN, String accountInfoPath, String accounType){
+    public OverdraftAccount(Customer holder, double balance, String IBAN, String accountInfoPath, String accounType, double draftLimit, double draftLeft){
         super(holder,balance,IBAN,accountInfoPath,accounType);
         this.accountType = accountType;
+        this.draftLimit = draftLimit;
+        this.draftLeft = draftLeft;
     }
     private void createAccount(){//customers/"+holder.getTCID()+"/"+this.IBAN
         String accountFileName = ("customers/"+super.holder.getTCID()+"/"+super.getIBAN());
