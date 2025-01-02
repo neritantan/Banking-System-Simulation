@@ -13,8 +13,8 @@ import java.io.IOException;
  *
  * @author enesi
  */
-public class CheckingAccount extends Account{
-    String accountType;
+    public class CheckingAccount extends Account{
+        String accountType;
     
     public CheckingAccount(Customer holder) {
         super(holder);

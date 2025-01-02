@@ -1,73 +1,119 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package bankingsystem;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 
-/**
- *
- * @author enesi
- */
-public class SavingsAccount extends CheckingAccount{
-    //String accountType = "Savings Account";
-    double interestRate;
-    double days = 0;
-    
-    SavingsAccount(Customer holder){
-        super(holder,"Saving Account");
+public class SavingsAccount extends CheckingAccount {
+    double interestRate = 0.02; 
+    LocalDate investmentDate;   
+    double investedAmount = 0;  
+    double savingsBalance = 0;  
+
+    SavingsAccount(Customer holder) {
+        super(holder, "Saving Account");
+
     }
     
-    private void createAccount(){//customers/"+holder.getTCID()+"/"+this.IBAN
-        String accountFileName = ("customers/"+super.holder.getTCID()+"/"+super.getIBAN());
+    SavingsAccount(Customer holder,LocalDate currentDay ) { // Use this while creating from file
+        super(holder, "Saving Account");
+        applyInterest(currentDay);
+    }
+
+    private void createAccount() { // customers/"+holder.getTCID()+"/"+this.IBAN
+        String accountFileName = ("customers/" + super.holder.getTCID() + "/" + super.getIBAN());
         File accountFile = new File(accountFileName);
         accountFile.mkdir();
-        //accountInfo(); --> Will be written to a text file.
-        File accountInfo = new File(accountFileName+"/accountInfo.txt");
-        try{
-             accountInfo.createNewFile();
-        }
-        catch(Exception e){
+        File accountInfo = new File(accountFileName + "/accountInfo.txt");
+        try {
+            accountInfo.createNewFile();
+        } catch (Exception e) {
             e.getMessage();
-       }
-       /// -> after file creation
-       try {
-        FileWriter fileWriter = new FileWriter(accountInfo); 
-        BufferedWriter writer = new BufferedWriter(fileWriter);
-
-
-        writer.write(accountInfo());
-
-        writer.close();
-        fileWriter.close();
-            
+        }
+        try {
+            FileWriter fileWriter = new FileWriter(accountInfo);
+            BufferedWriter writer = new BufferedWriter(fileWriter);
+            writer.write(accountInfo());
+            writer.close();
+            fileWriter.close();
+        } catch (IOException e) {
+            e.getMessage();
+        }
     }
-       catch (IOException e) {
-        e.getMessage();
-    }  
-    }
-    
+
     @Override
-    public String getaccountType(){
+    public String getaccountType() {
         return "Savings Account";
     }
-    
-    public String displayAccountInfo(){
-        return  ("Account Type: "+accountType
-                +"\nHolder: "+super.getHolderName()
-                + "\nIBAN: "+super.getIBAN()
-                + "\nBalance: $"+super.getBalance());
+
+    public String displayAccountInfo() {
+        return ("Account Type: " + accountType +
+                "\nHolder: " + super.getHolderName() +
+                "\nIBAN: " + super.getIBAN() + 
+                "\nBalance: $" + super.getBalance() + 
+                "\nInvested Amount: $" + investedAmount + 
+                "\nSavings Balance: $" + savingsBalance + 
+                "\nInvestment Date: " + investmentDate);
     }
-    
-    public String accountInfo(){// This part will be written into accountInfo.txt// WORK IN PROGRESS
-        
-        return (accountType+"\n"
-                +super.getHolderName()+"\n"
-                +super.getIBAN()+"\n"
-                +super.getBalance()+"\n");
+
+    public String accountInfo() { // This part will be written into accountInfo.txt// WORK IN PROGRESS
+        return (accountType + "\n" +
+                super.getHolderName() + "\n" + 
+                super.getIBAN() + "\n" + 
+                super.getBalance() + "\n" + 
+                investedAmount + "\n" + 
+                savingsBalance + "\n" + 
+                investmentDate + "\n");
+    }
+
+    public void deposit(double amount, LocalDate currentDay) {
+        try {
+            if (amount <= 0) {
+                throw new InvalidDepositAmountException(amount);
+            }
+            super.deposit(amount);
+        } catch (InvalidDepositAmountException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void invest(double amount, LocalDate currentDay) {
+        try {
+            if (amount <= 0) {
+                throw new InvalidDepositAmountException(amount);
+            }
+            if (super.getBalance() >= amount) {
+                investedAmount += amount;
+                super.withdraw(amount);
+                savingsBalance = amount;
+                this.investmentDate = currentDay;
+            } else {
+                throw new InsufficientFundsException(savingsBalance,amount);
+            }
+        } catch (InvalidDepositAmountException | InsufficientFundsException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void applyInterest(LocalDate currentDay) {/// Use this one after creating from file
+        long daysIn = java.time.temporal.ChronoUnit.DAYS.between(investmentDate, currentDay);
+        double interestAmount = investedAmount * interestRate * daysIn;
+        try {
+            savingsBalance += interestAmount;
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }
+
+    public void withdrawInvestment() {
+        try{
+            super.deposit(investedAmount);
+            investedAmount = 0;
+        }
+        catch(Exception e){
+            System.out.println(e.toString());
+        }
     }
 }
